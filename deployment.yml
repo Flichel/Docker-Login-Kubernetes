@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: login-action-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: login-action
+  template:
+    metadata:
+      labels:
+        app: login-action
+    spec:
+      containers:
+      - name: login-action
+        image: ${{ secrets.DOCKERHUB_USERNAME }}/login-action:latest
+        ports:
+        - containerPort: 8080 # Asegúrate de que este puerto coincida con el de tu aplicación
+
