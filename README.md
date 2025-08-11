@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [![GitHub release](https://img.shields.io/github/release/docker/login-action.svg?style=flat-square)](https://github.com/docker/login-action/releases/latest)
 [![GitHub marketplace](https://img.shields.io/badge/marketplace-docker--login-blue?logo=github&style=flat-square)](https://github.com/marketplace/actions/docker-login)
 [![CI workflow](https://img.shields.io/github/actions/workflow/status/docker/login-action/ci.yml?branch=master&label=ci&logo=github&style=flat-square)](https://github.com/docker/login-action/actions?workflow=ci)
@@ -512,3 +513,6 @@ The following inputs can be used as `step.with` keys:
 
 Want to contribute? Awesome! You can find information about contributing to
 this project in the [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
+=======
+# Docker-Login-Kubernetes
+>>>>>>> 
