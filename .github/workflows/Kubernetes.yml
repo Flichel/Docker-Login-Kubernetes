@@ -27,15 +27,19 @@ jobs:
         context: .
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/login-action:latest
-        
+
     - name: Set up Kubernetes CLI
       uses: azure/setup-kubectl@v3
       with:
-        version: 'v1.27.3' # Puedes usar la versión de kubectl que necesites
+        version: 'v1.27.3'
 
     - name: Deploy to Kubernetes
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
       run: |
-        echo "$KUBE_CONFIG_DATA" > kubeconfig
+        # Escribe el contenido del secreto en un archivo, manejando correctamente los saltos de línea.
+        # Esto es más robusto que un simple 'echo'.
+        printf "%s" "$KUBE_CONFIG_DATA" > kubeconfig
+        
+        # Aplica el archivo de despliegue a tu clúster de Kubernetes usando el archivo de configuración.
         kubectl --kubeconfig=./kubeconfig apply -f deployment.yml
