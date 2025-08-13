@@ -36,7 +36,7 @@ jobs:
 
     - name: Deploy to Kubernetes
       env:
-        KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_CERTIFICADOS }}
+        KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_CERTIFICADOSS }}
       run: |
         # Escribe el secreto decodificado en un archivo de configuración.
         mkdir -p $HOME/.kube
