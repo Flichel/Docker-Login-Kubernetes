@@ -38,9 +38,12 @@ jobs:
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIGG }}
       run: |
-        # Escribe el secreto multilínea en un archivo con la ruta completa.
+        # Escribe el secreto multilínea en un archivo con una estructura heredoc.
+        # Esto garantiza que los saltos de línea y el formato se mantengan.
         mkdir -p $HOME/.kube
-        echo "$KUBE_CONFIG_DATA" > $HOME/.kube/config
+        cat <<EOF > $HOME/.kube/config
+        $KUBE_CONFIG_DATA
+        EOF
         
         # Aplica el archivo de despliegue usando la misma ruta.
         kubectl --kubeconfig=$HOME/.kube/config apply -f deployment.yml
