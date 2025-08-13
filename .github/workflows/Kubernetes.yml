@@ -17,8 +17,8 @@ jobs:
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
       with:
-        username: ${{ secrets.DOCKERHUB_USERNAMEE }}
-        password: ${{ secrets.DOCKERHUB_TOKENN }}
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build and push Docker image
       id: docker_build
@@ -38,9 +38,8 @@ jobs:
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
       run: |
-        # Escribe el contenido del secreto en un archivo, manejando correctamente los saltos de línea.
-        # Esto es más robusto que un simple 'echo'.
-        printf "%s" "$KUBE_CONFIG_DATA" > kubeconfig
+        # Decodifica el secreto de base64 y lo escribe en el archivo kubeconfig.
+        echo "$KUBE_CONFIG_DATA" | base64 -d > kubeconfig
         
         # Aplica el archivo de despliegue a tu clúster de Kubernetes usando el archivo de configuración.
         kubectl --kubeconfig=./kubeconfig apply -f deployment.yml
