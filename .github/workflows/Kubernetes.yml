@@ -38,8 +38,10 @@ jobs:
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
       run: |
-        # Decodifica el secreto de base64 y lo escribe en el archivo kubeconfig.
-        echo "$KUBE_CONFIG_DATA" | base64 -d > kubeconfig
+        # Escribe el contenido del secreto directamente en un archivo.
+        # Esto es más robusto que usar `echo` o intentar decodificarlo.
+        printf "%s" "$KUBE_CONFIG_DATA" > kubeconfig
+        
         
         # Aplica el archivo de despliegue a tu clúster de Kubernetes usando el archivo de configuración.
         kubectl --kubeconfig=./kubeconfig apply -f deployment.yml
