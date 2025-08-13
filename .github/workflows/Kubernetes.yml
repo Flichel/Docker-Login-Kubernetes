@@ -30,7 +30,7 @@ jobs:
         file: ./dev.Dockerfile # <--- Línea agregada para especificar el nombre del archivo
         
     - name: Set up Kubernetes CLI
-      uses: azure/setup-kubectl@v3
+      uses: azure/setup-kubectl@v4
       with:
         version: 'v1.27.3'
 
