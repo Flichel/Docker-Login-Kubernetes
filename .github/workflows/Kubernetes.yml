@@ -27,7 +27,8 @@ jobs:
         context: .
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}flichel/login-action:latest
-
+        file: ./dev.Dockerfile # <--- Línea agregada para especificar el nombre del archivo
+        
     - name: Set up Kubernetes CLI
       uses: azure/setup-kubectl@v3
       with:
