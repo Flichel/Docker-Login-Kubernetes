@@ -36,7 +36,7 @@ jobs:
 
     - name: Deploy to Kubernetes
       env:
-        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIGG }}
       run: |
         # Escribe el contenido del secreto directamente en un archivo.
         # Esto es más robusto que usar `echo` o intentar decodificarlo.
