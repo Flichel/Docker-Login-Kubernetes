@@ -7,6 +7,12 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    
+    # PERMISOS: Necesarios para que la acción de autenticación de Google funcione correctamente.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -17,6 +23,7 @@ jobs:
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
       with:
+        # Nota: Revisa que el nombre del secreto sea correcto (USERNAMEE con dos 'E')
         username: ${{ secrets.DOCKERHUB_USERNAMEE }}
         password: ${{ secrets.DOCKERHUB_TOKENN }}
 
@@ -27,11 +34,26 @@ jobs:
         context: .
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAMEE }}/login-action:latest
-        file: ./dev.Dockerfile # <--- Línea agregada para especificar el nombre del archivo
+        file: ./dev.Dockerfile
 
+    # --- PASOS AÑADIDOS PARA CONECTARSE A GKE ---
 
+    # 1. Autenticarse contra Google Cloud
+    - name: Authenticate to Google Cloud
+      id: auth
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-    - name: Deploy to Kubernetes
-      run: |        
-        # Aplica el archivo de despliegue usando la misma ruta.
-        kubectl apply -f deployment.yml --validate=false
+    # 2. Instalar el SDK de Google Cloud (incluye gcloud y el plugin de auth para gke)
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+    
+    # 3. Obtener credenciales y desplegar en Kubernetes (TODO EN EL MISMO PASO)
+    - name: Get GKE credentials and deploy
+      run: |
+        # Este comando configura kubectl para que apunte a tu clúster de GKE
+        gcloud container clusters get-credentials docker-login-cluster-1 --region us-central1 --project glowing-indexer-468719-g0
+
+        # Ahora que kubectl está configurado, aplicamos el manifiesto
+        kubectl apply -f deployment.yml
