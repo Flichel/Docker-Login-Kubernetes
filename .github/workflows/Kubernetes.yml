@@ -26,23 +26,9 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}flichel/login-action:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAMEE }}/login-action:latest
         file: ./dev.Dockerfile # <--- Línea agregada para especificar el nombre del archivo
-        
-    - name: Set up Kubernetes CLI
-      uses: azure/setup-kubectl@v3
-      with:
-        version: 'v1.27.3'
 
-
-    - name: Autenticar con Google Cloud
-      uses: google-github-actions/auth@v2
-      with:
-        credentials_json: ${{ secrets.GCP_SA_KEY }}
-
-    - name: Obtener credenciales de GKE
-      run: |
-        gcloud container clusters get-credentials docker-login-cluster-1 --region us-central1 --project glowing-indexer-468719-g0
 
 
     - name: Deploy to Kubernetes
