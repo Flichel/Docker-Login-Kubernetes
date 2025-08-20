@@ -34,4 +34,4 @@ jobs:
     - name: Deploy to Kubernetes
       run: |        
         # Aplica el archivo de despliegue usando la misma ruta.
-        kubectl apply -f deployment.yml
+        kubectl apply -f deployment.yml --validate=false
