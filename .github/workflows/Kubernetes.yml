@@ -49,6 +49,12 @@ jobs:
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
     
+
+    # --- PASO CLAVE AÑADIDO ---
+    # Instala explícitamente el componente de autenticación de GKE.
+    - name: Install gke-gcloud-auth-plugin
+      run: gcloud components install gke-gcloud-auth-plugin --quiet
+
     # 3. Obtener credenciales y desplegar en Kubernetes (TODO EN EL MISMO PASO)
     - name: Get GKE credentials and deploy
       run: |
