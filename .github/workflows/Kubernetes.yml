@@ -46,17 +46,6 @@ jobs:
 
 
     - name: Deploy to Kubernetes
-      env:
-        KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_CERTIFICADOS }}
-      run: |
-        # Escribe el secreto decodificado en un archivo de configuración.
-        mkdir -p $HOME/.kube
-        echo "$KUBE_CONFIG" | base64 -d > $HOME/.kube/config
-        
-        # Paso de depuración: imprime el contenido decodificado
-        echo "--- kubeconfig contenido decodificado ---"
-        cat $HOME/.kube/config
-        echo "----------------------------------------"
-        
+      run: |        
         # Aplica el archivo de despliegue usando la misma ruta.
-        kubectl --kubeconfig=$HOME/.kube/config apply -f deployment.yml
+        kubectl apply -f deployment.yml
