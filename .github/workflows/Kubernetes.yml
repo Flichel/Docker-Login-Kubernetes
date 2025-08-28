@@ -47,7 +47,7 @@ jobs:
 
     # 2. Instalar el SDK de Google Cloud (incluye gcloud y el plugin de auth para gke)
     - name: Set up Cloud SDK
-      uses: google-github-actions/setup-gcloud@v2
+      uses: google-github-actions/setup-gcloud@v3
     
 
     # --- PASO CLAVE AÑADIDO ---
